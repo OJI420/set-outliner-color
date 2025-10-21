@@ -1,13 +1,14 @@
 from maya import cmds, OpenMayaUI
+from maya.api.OpenMaya import MGlobal
 
 MAYA_VERSION = cmds.about(v=True)
 
 if int(MAYA_VERSION) <= 2024:
-    from PySide2 import QtWidgets, QtCore, QtGui
+    from PySide2 import QtWidgets, QtCore
     from shiboken2 import wrapInstance
 
 elif int(MAYA_VERSION) >= 2025:
-    from PySide6 import QtWidgets, QtCore, QtGui
+    from PySide6 import QtWidgets, QtCore
     from shiboken6 import wrapInstance
 
 MAYA_MAIN_WINDOW = wrapInstance(int(OpenMayaUI.MQtUtil.mainWindow()), QtWidgets.QWidget)
@@ -92,17 +93,30 @@ class Gui(QtWidgets.QWidget):
         col = click_button.palette().button().color()
         col = [col.red() / 255.0, col.green() / 255.0, col.blue() / 255.0]
 
-        for s in cmds.ls(sl=True):
-            cmds.setAttr(f"{s}.useOutlinerColor", True)
-            cmds.setAttr(f"{s}.outlinerColor", *col)
+        cmds.undoInfo(ock=True)
+        try:
+            for s in cmds.ls(sl=True):
+                cmds.setAttr(f"{s}.useOutlinerColor", True)
+                cmds.setAttr(f"{s}.outlinerColor", *col)
+            cmds.undoInfo(cck=True)
+        except:
+            cmds.undoInfo(cck=True)
+            cmds.undo()
+            MGlobal.displayError("Selection Error.")
 
     def reset_color(self):
         click_button = self.sender()
         col = click_button.palette().button().color()
         col = [col.red() / 255.0, col.green() / 255.0, col.blue() / 255.0]
 
-        for s in cmds.ls(sl=True):
-            cmds.setAttr(f"{s}.useOutlinerColor", False)
+        cmds.undoInfo(ock=True)
+        try:
+            for s in cmds.ls(sl=True):
+                cmds.setAttr(f"{s}.useOutlinerColor", False)
+        except:
+            cmds.undoInfo(cck=True)
+            cmds.undo()
+            MGlobal.displayError("Selection Error.")
 
     def pre_close(self):
         for widget in QtWidgets.QApplication.allWidgets():
