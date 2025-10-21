@@ -1,8 +1,8 @@
-# outliner_color.py
+# ys_outliner_color.py
 ノードのアウトライナーカラーを編集するMayaスクリプトです。
 
-C:\Users\ユーザー名\Documents\maya\20##\scripts に配置し、以下のコードをシェルフに登録して使ってください。
+**ys_outliner_color.py** を **C:\Users\ユーザー名\Documents\maya\20##\scripts** に配置し、以下のコードをシェルフに登録して使ってください。
 ```python
-import outliner_color
-outliner_color.main()
+import ys_outliner_color
+ys_outliner_color.main()
 ```
