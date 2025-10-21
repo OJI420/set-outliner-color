@@ -3,6 +3,6 @@
 
 C:\Users\ユーザー名\Documents\maya\20##\scripts に配置し、以下のコードをシェルフに登録して使ってください。
 ```python
-import set-outliner-color.outliner_color
-set-outliner-color.outliner_color.main()
+import set-outliner-color-main.outliner_color as outliner_color
+outliner_color.main()
 ```
